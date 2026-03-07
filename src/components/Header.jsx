@@ -1,6 +1,9 @@
 import Navigation from "./Navigation.jsx";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 export default function Header() {
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <header
       style={{
@@ -20,7 +23,18 @@ export default function Header() {
               Movie discovery + watchlists
             </span>
           </div>
-          <Navigation />
+
+          <div className="row">
+            <Navigation />
+            {isAuthenticated ? (
+              <>
+                <span className="muted">Hi, {user?.name}</span>
+                <button className="button" type="button" onClick={logout}>
+                  Logout
+                </button>
+              </>
+            ) : null}
+          </div>
         </div>
       </div>
     </header>
